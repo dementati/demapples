@@ -39,6 +39,15 @@ class Vec2:
         """
         return ((self.x - other.x) ** 2 + (self.y - other.y) ** 2) ** 0.5
 
+    def squared_distance(self, other: Vec2) -> int:
+        """
+        >>> Vec2(1, 2).squared_distance(Vec2(4, 6))
+        25
+        >>> Vec2(0, 0).squared_distance(Vec2(3, 4))
+        25
+        """
+        return (self.x - other.x) ** 2 + (self.y - other.y) ** 2
+
 
 @dataclass(eq=True, frozen=True, slots=True)
 class Vec3:
@@ -77,3 +86,14 @@ class Vec3:
         return (
             (self.x - other.x) ** 2 + (self.y - other.y) ** 2 + (self.z - other.z) ** 2
         ) ** 0.5
+
+    def squared_distance(self, other: Vec3) -> int:
+        """
+        >>> Vec3(1, 2, 3).squared_distance(Vec3(4, 5, 6))
+        27
+        >>> Vec3(0, 0, 0).squared_distance(Vec3(1, 1, 1))
+        3
+        """
+        return (
+            (self.x - other.x) ** 2 + (self.y - other.y) ** 2 + (self.z - other.z) ** 2
+        )
