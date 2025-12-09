@@ -17,5 +17,6 @@ packages = ["src/demapples"]
 
 [dependency-groups]
 dev = [
+    "icecream>=2.1.8",
     "pytest>=9.0.2",
 ]
