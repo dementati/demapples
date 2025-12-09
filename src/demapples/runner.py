@@ -147,7 +147,7 @@ def run(year: int, max_day: int):
             func_names = [f"star1", f"star2"]
 
         for func_name in func_names:
-            run_function(day, func_name, args.perf, args.example, args.count)
+            run_function(day, func_name, args.time, args.example, args.count)
 
     if args.profile:
         with pyinstrument.profile():
