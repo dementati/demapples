@@ -3,6 +3,7 @@ import doctest
 import importlib
 import sys
 import timeit
+import pyinstrument
 from typing import Callable, cast
 
 
@@ -97,7 +98,15 @@ def run(year: int, max_day: int):
     parser.add_argument(
         "-e", "--example", action="store_true", help="Use example input"
     )
-    parser.add_argument("-p", "--perf", action="store_true", help="Profile performance")
+    parser.add_argument(
+        "-T", "--time", action="store_true", help="Measure runtime with timeit"
+    )
+    parser.add_argument(
+        "-p",
+        "--profile",
+        action="store_true",
+        help="Profile performance with pyinstrument",
+    )
     parser.add_argument(
         "-c",
         "--count",
@@ -129,12 +138,19 @@ def run(year: int, max_day: int):
         except ModuleNotFoundError:
             print(f"Module {module_name} not found.")
 
-    if args.func:
-        func_names = [args.func]
-    elif args.star:
-        func_names = [f"star{args.star}"]
-    else:
-        func_names = [f"star1", f"star2"]
+    def execute():
+        if args.func:
+            func_names = [args.func]
+        elif args.star:
+            func_names = [f"star{args.star}"]
+        else:
+            func_names = [f"star1", f"star2"]
 
-    for func_name in func_names:
-        run_function(day, func_name, args.perf, args.example, args.count)
+        for func_name in func_names:
+            run_function(day, func_name, args.perf, args.example, args.count)
+
+    if args.profile:
+        with pyinstrument.profile():
+            execute()
+    else:
+        execute()
