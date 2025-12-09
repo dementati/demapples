@@ -1,6 +1,5 @@
 import heapq
 from typing import Callable, TypeVar
-from icecream import ic
 
 T = TypeVar("T")
 Number = int | float
@@ -58,8 +57,6 @@ def find_path(
     while open_set:
         _, current = heapq.heappop(open_heap)
         open_set.remove(current)
-
-        ic(current)
 
         if current == "e":
             return g_score[current], _reconstruct_path(came_from, current)
