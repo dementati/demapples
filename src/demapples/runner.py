@@ -3,7 +3,8 @@ import doctest
 import importlib
 import sys
 import timeit
-import pyinstrument
+from pyinstrument import Profiler
+from pyinstrument.renderers.console import ConsoleRenderer
 from typing import Callable, cast
 
 
@@ -150,7 +151,12 @@ def run(year: int, max_day: int):
             run_function(day, func_name, args.time, args.example, args.count)
 
     if args.profile:
-        with pyinstrument.profile():
-            execute()
+        profiler = Profiler()
+
+        with profiler:
+            execute()  # your function
+
+        renderer = ConsoleRenderer(color=True)
+        print(renderer.render(profiler.last_session))
     else:
         execute()
