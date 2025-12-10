@@ -79,8 +79,6 @@ def run_function(
         print(f"Result: {result}")
     except ModuleNotFoundError:
         print(f"Module {module_name} not found.")
-    except Exception as e:
-        print(f"Error running {module_name}.{func_name}(): {e}")
 
 
 def run(year: int, max_day: int):
