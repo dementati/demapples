@@ -20,6 +20,7 @@ def _reconstruct_path(came_from: dict[T, T], current: T) -> list[T]:
 
 def find_path(
     start: T,
+    end: T,
     dist: Callable[[T, T], Number],
     get_neighbours: Callable[[T], list[T]],
     heuristic: Callable[[T], Number],
@@ -38,7 +39,7 @@ def find_path(
     ...     return neighbors.get(s, [])
     >>> def heuristic(s: str) -> int:
     ...     return 0
-    >>> find_path('A', dist, get_neighbours, heuristic)
+    >>> find_path('A', 'e', dist, get_neighbours, heuristic)
     (3, ['A', 'B', 'D', 'e'])
     """
 
@@ -58,7 +59,7 @@ def find_path(
         _, current = heapq.heappop(open_heap)
         open_set.remove(current)
 
-        if current == "e":
+        if current == end:
             return g_score[current], _reconstruct_path(came_from, current)
 
         for neighbor in get_neighbours(current):
