@@ -55,8 +55,12 @@ def find_path(
 
     update_f_score(start, heuristic(start))
 
-    while open_set:
+    while open_heap:
         _, current = heapq.heappop(open_heap)
+
+        if current not in open_set:
+            continue
+
         open_set.remove(current)
 
         if current == end:
