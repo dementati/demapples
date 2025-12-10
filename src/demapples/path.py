@@ -22,7 +22,7 @@ def find_path(
     start: T,
     end: T,
     dist: Callable[[T, T], Number],
-    get_neighbours: Callable[[T], tuple[T]],
+    get_neighbours: Callable[[T], tuple[T, ...]],
     heuristic: Callable[[T], Number],
 ) -> tuple[Number, list[T]] | None:
     """
