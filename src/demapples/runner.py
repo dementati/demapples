@@ -103,6 +103,12 @@ def init_day_folder(day: int):
         with open(day_init_file, "w") as f:
             f.write(f"# Day {day} solutions\n")
 
+    # Create input.txt if it doesn't exist
+    input_file = os.path.join(day_folder, "input.txt")
+    if not os.path.exists(input_file):
+        with open(input_file, "w") as f:
+            f.write("")  # Empty input file
+
     print(f"Initialized folder structure for day {day}.")
 
 
