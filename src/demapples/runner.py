@@ -109,6 +109,12 @@ def init_day_folder(day: int):
         with open(input_file, "w") as f:
             f.write("")  # Empty input file
 
+    # Create example input file
+    example_file = os.path.join(examples_folder, "1.txt")
+    if not os.path.exists(example_file):
+        with open(example_file, "w") as f:
+            f.write("")  # Empty example input file
+
     print(f"Initialized folder structure for day {day}.")
 
 
