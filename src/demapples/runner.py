@@ -111,7 +111,7 @@ def init_day_folder(day: int):
 
     # Create example input file if examples folder is empty
     if not os.listdir(examples_folder):
-        example_file = os.path.join(examples_folder, "example1.txt")
+        example_file = os.path.join(examples_folder, "1.txt")
         with open(example_file, "w") as f:
             f.write("")  # Empty example file
 
