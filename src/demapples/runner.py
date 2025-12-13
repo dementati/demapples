@@ -12,7 +12,7 @@ def run_function(
     day: int,
     func_name: str,
     profile_performance: bool,
-    use_example: bool,
+    example: str | None,
     count: int | None = None,
 ) -> None:
     module_name = f"days.day{day}"
@@ -24,7 +24,7 @@ def run_function(
         module = importlib.import_module(module_name)
         func = cast(Callable[[str], str], getattr(module, func_name, None))
 
-        file_path = "examples/1.txt" if use_example else "input.txt"
+        file_path = f"examples/{example}.txt" if example else "input.txt"
 
         with open(f"days/day{day}/{file_path}") as file:
             input_str = file.read()
@@ -95,7 +95,10 @@ def run(year: int, max_day: int):
     )
     parser.add_argument("-f", "--func", type=str, help="Optional function name to run")
     parser.add_argument(
-        "-e", "--example", action="store_true", help="Use example input"
+        "-e",
+        "--example",
+        type=str,
+        help="Use example input from file days/dayX/examples/<file>.txt",
     )
     parser.add_argument(
         "-T", "--time", action="store_true", help="Measure runtime with timeit"
@@ -155,6 +158,7 @@ def run(year: int, max_day: int):
             execute()  # your function
 
         renderer = ConsoleRenderer(color=True)
+        assert profiler.last_session is not None, "Profiler did not record any session."
         print(renderer.render(profiler.last_session))
     else:
         execute()
