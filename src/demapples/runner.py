@@ -1,6 +1,7 @@
 import argparse
 import doctest
 import importlib
+import os
 import sys
 import timeit
 from pyinstrument import Profiler
@@ -81,6 +82,30 @@ def run_function(
         print(f"Module {module_name} not found.")
 
 
+def init_day_folder(day: int):
+    # Create days folder if it doesn't exist
+    os.makedirs("days", exist_ok=True)
+
+    # Create days/__init__.py file if it doesn't exist
+    init_file = os.path.join("days", "__init__.py")
+    if not os.path.exists(init_file):
+        with open(init_file, "w") as f:
+            f.write("# days package\n")
+
+    # Create days/dayX folder structure
+    day_folder = f"days/day{day}"
+    examples_folder = os.path.join(day_folder, "examples")
+    os.makedirs(examples_folder, exist_ok=True)
+
+    # Create __init__.py in day folder
+    day_init_file = os.path.join(day_folder, "__init__.py")
+    if not os.path.exists(day_init_file):
+        with open(day_init_file, "w") as f:
+            f.write(f"# Day {day} solutions\n")
+
+    print(f"Initialized folder structure for day {day}.")
+
+
 def run(year: int, max_day: int):
     parser = argparse.ArgumentParser(
         description=f"Run Advent of Code {year} solutions."
@@ -121,7 +146,14 @@ def run(year: int, max_day: int):
     parser.add_argument(
         "-v", "--verbose", action="store_true", help="Enable verbose output for tests"
     )
+    parser.add_argument(
+        "-i", "--init", action="store_true", help="Initialize day folder"
+    )
     args = parser.parse_args()
+
+    if args.init:
+        init_day_folder(args.day)
+        return
 
     day = args.day
 
