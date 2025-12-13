@@ -157,6 +157,11 @@ def run(year: int, max_day: int):
 
     day = args.day
 
+    # If day folder does not exist, initialize automatically
+    day_folder = f"days/day{day}"
+    if not os.path.exists(day_folder):
+        init_day_folder(day)
+
     if args.test:
         module_name = f"days.day{day}"
         print(f"Running tests for {module_name}...")
