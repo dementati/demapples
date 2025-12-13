@@ -92,8 +92,8 @@ def init_day_folder(day: int):
         with open(init_file, "w") as f:
             f.write("# days package\n")
 
-    # Create days/dayX folder structure
-    day_folder = f"days/day{day}"
+    # Create days/dayX folder structure if it doesn't exist
+    day_folder = os.path.join("days", f"day{day}")
     examples_folder = os.path.join(day_folder, "examples")
     os.makedirs(examples_folder, exist_ok=True)
 
@@ -109,13 +109,11 @@ def init_day_folder(day: int):
         with open(input_file, "w") as f:
             f.write("")  # Empty input file
 
-    # Create example input file
-    example_file = os.path.join(examples_folder, "1.txt")
-    if not os.path.exists(example_file):
+    # Create example input file if examples folder is empty
+    if not os.listdir(examples_folder):
+        example_file = os.path.join(examples_folder, "example1.txt")
         with open(example_file, "w") as f:
-            f.write("")  # Empty example input file
-
-    print(f"Initialized folder structure for day {day}.")
+            f.write("")  # Empty example file
 
 
 def run(year: int, max_day: int):
@@ -158,25 +156,15 @@ def run(year: int, max_day: int):
     parser.add_argument(
         "-v", "--verbose", action="store_true", help="Enable verbose output for tests"
     )
-    parser.add_argument(
-        "-i", "--init", action="store_true", help="Initialize day folder"
-    )
     args = parser.parse_args()
 
     if args.day < 1 or args.day > max_day:
         print(f"Day must be between 1 and {max_day}.")
         return
 
-    if args.init:
-        init_day_folder(args.day)
-        return
-
     day = args.day
 
-    # If day folder does not exist, initialize automatically
-    day_folder = f"days/day{day}"
-    if not os.path.exists(day_folder):
-        init_day_folder(day)
+    init_day_folder(day)
 
     if args.test:
         module_name = f"days.day{day}"
