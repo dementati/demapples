@@ -151,6 +151,10 @@ def run(year: int, max_day: int):
     )
     args = parser.parse_args()
 
+    if args.day < 1 or args.day > max_day:
+        print(f"Day must be between 1 and {max_day}.")
+        return
+
     if args.init:
         init_day_folder(args.day)
         return
