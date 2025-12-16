@@ -140,6 +140,18 @@ class Vec2:
         """
         return (self.x - other.x) ** 2 + (self.y - other.y) ** 2
 
+    def bounded(self, bounds: Vec2) -> Vec2:
+        """
+        >>> Vec2(5, 7).bounded(Vec2(4, 6))
+        Vec2(x=4, y=6)
+        >>> Vec2(-1, 3).bounded(Vec2(0, 2))
+        Vec2(x=0, y=2)
+        """
+        return Vec2(
+            max(0, min(self.x, bounds.x)),
+            max(0, min(self.y, bounds.y)),
+        )
+
 
 @dataclass(eq=True, frozen=True, slots=True)
 class Vec3:
@@ -279,4 +291,17 @@ class Vec3:
         """
         return (
             (self.x - other.x) ** 2 + (self.y - other.y) ** 2 + (self.z - other.z) ** 2
+        )
+
+    def bounded(self, bounds: Vec3) -> Vec3:
+        """
+        >>> Vec3(5, 7, 9).bounded(Vec3(4, 6, 8))
+        Vec3(x=4, y=6, z=8)
+        >>> Vec3(-1, 3, 5).bounded(Vec3(0, 2, 4))
+        Vec3(x=0, y=2, z=4)
+        """
+        return Vec3(
+            max(0, min(self.x, bounds.x)),
+            max(0, min(self.y, bounds.y)),
+            max(0, min(self.z, bounds.z)),
         )
