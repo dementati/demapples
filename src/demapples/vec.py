@@ -2,6 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from functools import cache
 from itertools import product
+from typing import overload
 
 
 @dataclass(eq=True, frozen=True, slots=True)
@@ -9,11 +10,93 @@ class Vec2:
     x: int
     y: int
 
-    def __add__(self, other: Vec2) -> Vec2:
-        return Vec2(self.x + other.x, self.y + other.y)
+    @overload
+    def __add__(self, other: Vec2) -> Vec2: ...
+    @overload
+    def __add__(self, other: int) -> Vec2: ...
+    def __add__(self, other: Vec2 | int) -> Vec2:
+        if isinstance(other, Vec2):
+            return Vec2(self.x + other.x, self.y + other.y)
+        if isinstance(other, int):
+            return Vec2(self.x + other, self.y + other)
+        return NotImplemented
 
-    def __sub__(self, other: Vec2) -> Vec2:
-        return Vec2(self.x - other.x, self.y - other.y)
+    @overload
+    def __sub__(self, other: Vec2) -> Vec2: ...
+    @overload
+    def __sub__(self, other: int) -> Vec2: ...
+    def __sub__(self, other: Vec2 | int) -> Vec2:
+        if isinstance(other, Vec2):
+            return Vec2(self.x - other.x, self.y - other.y)
+        if isinstance(other, int):
+            return Vec2(self.x - other, self.y - other)
+        return NotImplemented
+
+    @overload
+    def __mul__(self, other: Vec2) -> Vec2: ...
+    @overload
+    def __mul__(self, other: int) -> Vec2: ...
+    def __mul__(self, other: Vec2 | int) -> Vec2:
+        if isinstance(other, Vec2):
+            return Vec2(self.x * other.x, self.y * other.y)
+        if isinstance(other, int):
+            return Vec2(self.x * other, self.y * other)
+        return NotImplemented
+
+    @overload
+    def __div__(self, other: Vec2) -> Vec2: ...
+    @overload
+    def __div__(self, other: int) -> Vec2: ...
+    def __div__(self, other: Vec2 | int) -> Vec2:
+        if isinstance(other, Vec2):
+            return Vec2(self.x // other.x, self.y // other.y)
+        if isinstance(other, int):
+            return Vec2(self.x // other, self.y // other)
+        return NotImplemented
+
+    @overload
+    def __iadd__(self, other: Vec2) -> Vec2: ...
+    @overload
+    def __iadd__(self, other: int) -> Vec2: ...
+    def __iadd__(self, other: Vec2 | int) -> Vec2:
+        if isinstance(other, Vec2):
+            return Vec2(self.x + other.x, self.y + other.y)
+        if isinstance(other, int):
+            return Vec2(self.x + other, self.y + other)
+        return NotImplemented
+
+    @overload
+    def __isub__(self, other: Vec2) -> Vec2: ...
+    @overload
+    def __isub__(self, other: int) -> Vec2: ...
+    def __isub__(self, other: Vec2 | int) -> Vec2:
+        if isinstance(other, Vec2):
+            return Vec2(self.x - other.x, self.y - other.y)
+        if isinstance(other, int):
+            return Vec2(self.x - other, self.y - other)
+        return NotImplemented
+
+    @overload
+    def __imul__(self, other: Vec2) -> Vec2: ...
+    @overload
+    def __imul__(self, other: int) -> Vec2: ...
+    def __imul__(self, other: Vec2 | int) -> Vec2:
+        if isinstance(other, Vec2):
+            return Vec2(self.x * other.x, self.y * other.y)
+        if isinstance(other, int):
+            return Vec2(self.x * other, self.y * other)
+        return NotImplemented
+
+    @overload
+    def __idiv__(self, other: Vec2) -> Vec2: ...
+    @overload
+    def __idiv__(self, other: int) -> Vec2: ...
+    def __idiv__(self, other: Vec2 | int) -> Vec2:
+        if isinstance(other, Vec2):
+            return Vec2(self.x // other.x, self.y // other.y)
+        if isinstance(other, int):
+            return Vec2(self.x // other, self.y // other)
+        return NotImplemented
 
     @cache
     def neighbours(self) -> set[Vec2]:
@@ -55,11 +138,93 @@ class Vec3:
     y: int
     z: int
 
-    def __add__(self, other: Vec3) -> Vec3:
-        return Vec3(self.x + other.x, self.y + other.y, self.z + other.z)
+    @overload
+    def __add__(self, other: Vec3) -> Vec3: ...
+    @overload
+    def __add__(self, other: int) -> Vec3: ...
+    def __add__(self, other: Vec3 | int) -> Vec3:
+        if isinstance(other, Vec3):
+            return Vec3(self.x + other.x, self.y + other.y, self.z + other.z)
+        if isinstance(other, int):
+            return Vec3(self.x + other, self.y + other, self.z + other)
+        return NotImplemented
 
-    def __sub__(self, other: Vec3) -> Vec3:
-        return Vec3(self.x - other.x, self.y - other.y, self.z - other.z)
+    @overload
+    def __sub__(self, other: Vec3) -> Vec3: ...
+    @overload
+    def __sub__(self, other: int) -> Vec3: ...
+    def __sub__(self, other: Vec3 | int) -> Vec3:
+        if isinstance(other, Vec3):
+            return Vec3(self.x - other.x, self.y - other.y, self.z - other.z)
+        if isinstance(other, int):
+            return Vec3(self.x - other, self.y - other, self.z - other)
+        return NotImplemented
+
+    @overload
+    def __mul__(self, other: Vec3) -> Vec3: ...
+    @overload
+    def __mul__(self, other: int) -> Vec3: ...
+    def __mul__(self, other: Vec3 | int) -> Vec3:
+        if isinstance(other, Vec3):
+            return Vec3(self.x * other.x, self.y * other.y, self.z * other.z)
+        if isinstance(other, int):
+            return Vec3(self.x * other, self.y * other, self.z * other)
+        return NotImplemented
+
+    @overload
+    def __div__(self, other: Vec3) -> Vec3: ...
+    @overload
+    def __div__(self, other: int) -> Vec3: ...
+    def __div__(self, other: Vec3 | int) -> Vec3:
+        if isinstance(other, Vec3):
+            return Vec3(self.x // other.x, self.y // other.y, self.z // other.z)
+        if isinstance(other, int):
+            return Vec3(self.x // other, self.y // other, self.z // other)
+        return NotImplemented
+
+    @overload
+    def __iadd__(self, other: Vec3) -> Vec3: ...
+    @overload
+    def __iadd__(self, other: int) -> Vec3: ...
+    def __iadd__(self, other: Vec3 | int) -> Vec3:
+        if isinstance(other, Vec3):
+            return Vec3(self.x + other.x, self.y + other.y, self.z + other.z)
+        if isinstance(other, int):
+            return Vec3(self.x + other, self.y + other, self.z + other)
+        return NotImplemented
+
+    @overload
+    def __isub__(self, other: Vec3) -> Vec3: ...
+    @overload
+    def __isub__(self, other: int) -> Vec3: ...
+    def __isub__(self, other: Vec3 | int) -> Vec3:
+        if isinstance(other, Vec3):
+            return Vec3(self.x - other.x, self.y - other.y, self.z - other.z)
+        if isinstance(other, int):
+            return Vec3(self.x - other, self.y - other, self.z - other)
+        return NotImplemented
+
+    @overload
+    def __imul__(self, other: Vec3) -> Vec3: ...
+    @overload
+    def __imul__(self, other: int) -> Vec3: ...
+    def __imul__(self, other: Vec3 | int) -> Vec3:
+        if isinstance(other, Vec3):
+            return Vec3(self.x * other.x, self.y * other.y, self.z * other.z)
+        if isinstance(other, int):
+            return Vec3(self.x * other, self.y * other, self.z * other)
+        return NotImplemented
+
+    @overload
+    def __idiv__(self, other: Vec3) -> Vec3: ...
+    @overload
+    def __idiv__(self, other: int) -> Vec3: ...
+    def __idiv__(self, other: Vec3 | int) -> Vec3:
+        if isinstance(other, Vec3):
+            return Vec3(self.x // other.x, self.y // other.y, self.z // other.z)
+        if isinstance(other, int):
+            return Vec3(self.x // other, self.y // other, self.z // other)
+        return NotImplemented
 
     @cache
     def neighbours(self) -> set[Vec3]:
