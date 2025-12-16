@@ -113,6 +113,15 @@ class Vec2:
             neighbours.add(Vec2(self.x + dx, self.y + dy))
         return neighbours
 
+    def manhattan_distance(self, other: Vec2) -> int:
+        """
+        >>> Vec2(1, 2).manhattan_distance(Vec2(4, 6))
+        7
+        >>> Vec2(0, 0).manhattan_distance(Vec2(3, 4))
+        7
+        """
+        return abs(self.x - other.x) + abs(self.y - other.y)
+
     def euclidean_distance(self, other: Vec2) -> float:
         """
         >>> Vec2(1, 2).euclidean_distance(Vec2(4, 6))
@@ -240,6 +249,15 @@ class Vec3:
                 continue
             neighbours.add(Vec3(self.x + dx, self.y + dy, self.z + dz))
         return neighbours
+
+    def manhattan_distance(self, other: Vec3) -> int:
+        """
+        >>> Vec3(1, 2, 3).manhattan_distance(Vec3(4, 5, 6))
+        9
+        >>> Vec3(0, 0, 0).manhattan_distance(Vec3(1, 1, 1))
+        3
+        """
+        return abs(self.x - other.x) + abs(self.y - other.y) + abs(self.z - other.z)
 
     def euclidean_distance(self, other: Vec3) -> float:
         """
