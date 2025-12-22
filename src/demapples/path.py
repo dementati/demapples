@@ -46,14 +46,9 @@ def find_path(
     open_set: set[T] = {start}
     open_heap: list[tuple[Number, T]] = []
     g_score: dict[T, Number] = {start: 0}
-    f_score: dict[T, Number] = {}
     came_from: dict[T, T] = {}
 
-    def update_f_score(key: T, value: Number) -> None:
-        f_score[key] = value
-        heapq.heappush(open_heap, (value, key))
-
-    update_f_score(start, heuristic(start))
+    heapq.heappush(open_heap, (heuristic(start), start))
 
     while open_heap:
         _, current = heapq.heappop(open_heap)
@@ -70,7 +65,7 @@ def find_path(
             tentative_g = g_score[current] + dist(current, neighbor)
             if neighbor not in g_score or tentative_g < g_score[neighbor]:
                 g_score[neighbor] = tentative_g
-                update_f_score(neighbor, tentative_g + heuristic(neighbor))
+                heapq.heappush(open_heap, (tentative_g + heuristic(neighbor), neighbor))
                 came_from[neighbor] = current
                 open_set.add(neighbor)
 
