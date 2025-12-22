@@ -10,6 +10,13 @@ class Vec2:
     x: int
     y: int
 
+    def __iter__(self):
+        """
+        >>> list(Vec2(1, 2))
+        [1, 2]
+        """
+        return iter((self.x, self.y))
+
     @overload
     def __add__(self, other: Vec2) -> Vec2: ...
     @overload
@@ -164,6 +171,13 @@ class Vec3:
     y: int
     z: int
 
+    def __iter__(self):
+        """
+        >>> list(Vec3(1, 2, 3))
+        [1, 2, 3]
+        """
+        return iter((self.x, self.y, self.z))
+
     @overload
     def __add__(self, other: Vec3) -> Vec3: ...
     @overload
@@ -260,7 +274,7 @@ class Vec3:
         >>> Vec3(1, 1, 1).neighbours()
         {Vec3(x=2, y=0, z=2), Vec3(x=0, y=1, z=0), Vec3(x=2, y=2, z=2), Vec3(x=2, y=1, z=0), Vec3(x=1, y=2, z=2), Vec3(x=0, y=0, z=1), Vec3(x=0, y=2, z=1), Vec3(x=1, y=0, z=1), Vec3(x=1, y=1, z=0), Vec3(x=2, y=0, z=1), Vec3(x=2, y=1, z=2), Vec3(x=2, y=2, z=1), Vec3(x=0, y=1, z=2), Vec3(x=1, y=2, z=1), Vec3(x=0, y=2, z=0), Vec3(x=0, y=0, z=0), Vec3(x=1, y=1, z=2), Vec3(x=1, y=0, z=0), Vec3(x=2, y=0, z=0), Vec3(x=2, y=2, z=0), Vec3(x=0, y=1, z=1), Vec3(x=2, y=1, z=1), Vec3(x=1, y=2, z=0), Vec3(x=0, y=0, z=2), Vec3(x=0, y=2, z=2), Vec3(x=1, y=0, z=2)}
         >>> Vec3(0, 0, 0).neighbours(diag=False)
-        Vec3(x=-1, y=0, z=0), Vec3(x=-1, y=1, z=0), Vec3(x=0, y=0, z=-1), Vec3(x=1, y=-1, z=0), Vec3(x=-1, y=-1, z=0), Vec3(x=0, y=0, z=1), Vec3(x=0, y=1, z=-1), Vec3(x=0, y=1, z=1)}
+        {Vec3(x=0, y=-1, z=-1), Vec3(x=1, y=0, z=1), Vec3(x=-1, y=0, z=1), Vec3(x=0, y=-1, z=1), Vec3(x=0, y=1, z=0), Vec3(x=-1, y=0, z=-1), Vec3(x=1, y=0, z=-1), Vec3(x=1, y=1, z=0), Vec3(x=0, y=-1, z=0), Vec3(x=1, y=0, z=0), Vec3(x=-1, y=0, z=0), Vec3(x=-1, y=1, z=0), Vec3(x=0, y=0, z=-1), Vec3(x=1, y=-1, z=0), Vec3(x=-1, y=-1, z=0), Vec3(x=0, y=0, z=1), Vec3(x=0, y=1, z=-1), Vec3(x=0, y=1, z=1)}
         """
         neighbours = set()
         for dx, dy, dz in product((-1, 0, 1), repeat=3):
