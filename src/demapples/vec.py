@@ -17,6 +17,9 @@ class Vec2:
         """
         return iter((self.x, self.y))
 
+    def __lt__(self, other: Vec2) -> bool:
+        return (self.x, self.y) < (other.x, other.y)
+
     @overload
     def __add__(self, other: Vec2) -> Vec2: ...
     @overload
@@ -177,6 +180,9 @@ class Vec3:
         [1, 2, 3]
         """
         return iter((self.x, self.y, self.z))
+
+    def __lt__(self, other: Vec3) -> bool:
+        return (self.x, self.y, self.z) < (other.x, other.y, other.z)
 
     @overload
     def __add__(self, other: Vec3) -> Vec3: ...
