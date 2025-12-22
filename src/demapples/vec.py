@@ -99,15 +99,20 @@ class Vec2:
         return NotImplemented
 
     @cache
-    def neighbours(self) -> set[Vec2]:
+    def neighbours(self, diag: bool = True) -> set[Vec2]:
         """
         >>> Vec2(0, 0).neighbours()
         {Vec2(x=0, y=1), Vec2(x=-1, y=-1), Vec2(x=-1, y=1), Vec2(x=1, y=1), Vec2(x=1, y=-1), Vec2(x=-1, y=0), Vec2(x=1, y=0), Vec2(x=0, y=-1)}
         >>> Vec2(1, 1).neighbours()
         {Vec2(x=0, y=1), Vec2(x=1, y=2), Vec2(x=2, y=1), Vec2(x=0, y=0), Vec2(x=2, y=0), Vec2(x=0, y=2), Vec2(x=2, y=2), Vec2(x=1, y=0)}
+        >>> Vec2(0, 0).neighbours(diag=False)
+        {Vec2(x=-1, y=0), Vec2(x=1, y=0), Vec2(x=0, y=-1), Vec2(x=0, y=1)}
         """
         neighbours = set()
         for dx, dy in product((-1, 0, 1), repeat=2):
+            if not diag and dx != 0 and dy != 0:
+                continue
+
             if dx == 0 and dy == 0:
                 continue
             neighbours.add(Vec2(self.x + dx, self.y + dy))
@@ -248,15 +253,20 @@ class Vec3:
         return NotImplemented
 
     @cache
-    def neighbours(self) -> set[Vec3]:
+    def neighbours(self, diag: bool = True) -> set[Vec3]:
         """
         >>> Vec3(0, 0, 0).neighbours()
         {Vec3(x=0, y=-1, z=-1), Vec3(x=-1, y=1, z=-1), Vec3(x=0, y=-1, z=1), Vec3(x=0, y=1, z=0), Vec3(x=-1, y=1, z=1), Vec3(x=1, y=-1, z=1), Vec3(x=1, y=-1, z=-1), Vec3(x=0, y=0, z=-1), Vec3(x=0, y=0, z=1), Vec3(x=1, y=0, z=1), Vec3(x=1, y=1, z=0), Vec3(x=1, y=0, z=-1), Vec3(x=-1, y=-1, z=-1), Vec3(x=0, y=-1, z=0), Vec3(x=-1, y=-1, z=1), Vec3(x=-1, y=1, z=0), Vec3(x=1, y=-1, z=0), Vec3(x=-1, y=0, z=1), Vec3(x=-1, y=0, z=-1), Vec3(x=1, y=0, z=0), Vec3(x=-1, y=-1, z=0), Vec3(x=0, y=1, z=-1), Vec3(x=0, y=1, z=1), Vec3(x=-1, y=0, z=0), Vec3(x=1, y=1, z=-1), Vec3(x=1, y=1, z=1)}
         >>> Vec3(1, 1, 1).neighbours()
         {Vec3(x=2, y=0, z=2), Vec3(x=0, y=1, z=0), Vec3(x=2, y=2, z=2), Vec3(x=2, y=1, z=0), Vec3(x=1, y=2, z=2), Vec3(x=0, y=0, z=1), Vec3(x=0, y=2, z=1), Vec3(x=1, y=0, z=1), Vec3(x=1, y=1, z=0), Vec3(x=2, y=0, z=1), Vec3(x=2, y=1, z=2), Vec3(x=2, y=2, z=1), Vec3(x=0, y=1, z=2), Vec3(x=1, y=2, z=1), Vec3(x=0, y=2, z=0), Vec3(x=0, y=0, z=0), Vec3(x=1, y=1, z=2), Vec3(x=1, y=0, z=0), Vec3(x=2, y=0, z=0), Vec3(x=2, y=2, z=0), Vec3(x=0, y=1, z=1), Vec3(x=2, y=1, z=1), Vec3(x=1, y=2, z=0), Vec3(x=0, y=0, z=2), Vec3(x=0, y=2, z=2), Vec3(x=1, y=0, z=2)}
+        >>> Vec3(0, 0, 0).neighbours(diag=False)
+        Vec3(x=-1, y=0, z=0), Vec3(x=-1, y=1, z=0), Vec3(x=0, y=0, z=-1), Vec3(x=1, y=-1, z=0), Vec3(x=-1, y=-1, z=0), Vec3(x=0, y=0, z=1), Vec3(x=0, y=1, z=-1), Vec3(x=0, y=1, z=1)}
         """
         neighbours = set()
         for dx, dy, dz in product((-1, 0, 1), repeat=3):
+            if not diag and dx != 0 and dy != 0 and dz != 0:
+                continue
+
             if dx == 0 and dy == 0 and dz == 0:
                 continue
             neighbours.add(Vec3(self.x + dx, self.y + dy, self.z + dz))
